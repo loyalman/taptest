@@ -1,0 +1,60 @@
+ext {
+    config = [
+            'compileSdk' : 31,
+            'targetSdk'  : 31,
+            'buildTools' : "30.0.3",
+            'minSdk'     : 23,
+            'versionCode': 1,
+            'versionName': "1.00",
+            'testRunner' : "androidx.test.runner.AndroidJUnitRunner",
+    ]
+}
+android {
+    compileSdkVersion config.compileSdk
+    buildToolsVersion config.buildTools
+
+    defaultConfig {
+        minSdkVersion config.minSdk
+        targetSdkVersion config.targetSdk
+        versionCode config.versionCode
+        versionName config.versionName
+        testInstrumentationRunner config.testRunner
+    }
+    buildTypes {
+        release {
+            debuggable false
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    testOptions.unitTests {
+        includeAndroidResources = true
+        returnDefaultValues = true
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+    kotlinOptions {
+        jvmTarget = '11'
+        useIR = true
+        freeCompilerArgs = ["-Xallow-result-return-type"]
+    }
+    buildFeatures {
+        compose true
+        viewBinding true
+        dataBinding false
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion "1.1.1"
+    }
+    packagingOptions {
+        resources {
+            excludes += ['META-INF/AL2.0', 'META-INF/LGPL2.1', 'META-INF/*.kotlin_module']
+        }
+    }
+}

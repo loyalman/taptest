@@ -1,0 +1,49 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+apply from: "$rootDir/gradle/config.gradle"
+
+android {
+    compileSdk 31
+
+    defaultConfig {
+        applicationId "ru.loyalman.android.myapplication"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+}
+
+dependencies {
+    implementation(project(":base"))
+    implementation(project(":remote"))
+
+    implementation(libs.bundles.navigation)
+    implementation(libs.timber)
+    implementation(libs.exoPlayer)
+    implementation(libs.glide)
+    kapt(libs.glideKapt)
+    implementation(libs.bundles.compose)
+    implementation(libs.material)
+    implementation(libs.bundles.lifecycle)
+    implementation(libs.bundles.coroutines)
+    implementation(libs.constraintLayout)
+
+    implementation(libs.hilt)
+    kapt(libs.hiltKapt)
+
+    testImplementation libs.bundles.testsCommon
+    androidTestImplementation libs.bundles.testsCommon
+}
